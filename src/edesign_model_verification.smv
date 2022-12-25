@@ -1,0 +1,64 @@
+MODULE main
+VAR
+	state: {s0, s1, s2, s3, s4, s5, s6};
+	eDesignNew630: boolean;
+	Homepage:boolean;
+	LoginPage: boolean;
+	Authentication: boolean;
+	LoginFailed: boolean;
+	ProjectDashboardPage: boolean;
+	Exit: boolean;
+
+ASSIGN
+	init(state):= s0;
+	init(Homepage):=TRUE;
+	init(LoginPage):=FALSE;
+	init(Authentication):=FALSE;
+	init(eDesignNew630):=FALSE;
+	init(LoginFailed):=FALSE;
+	init(ProjectDashboardPage):=FALSE;
+	init(Exit):=FALSE;
+
+next(state):=case
+             state=s0: {s1};
+			 state=s1: {s2,s6};
+			 state=s2: {s1,s3};
+			 state=s3: {s4,s5};
+			 state=s4: {s6};
+			 state=s5: {s2,s6};
+			 state=s6: {s6};
+			 TRUE: state;
+esac;
+
+next(eDesignNew630):=case
+             next(state)=s0: TRUE;
+             TRUE:FALSE;
+esac;
+
+next(Homepage):=case
+             next(state)=s1: TRUE;
+             TRUE:FALSE;
+esac;
+
+next(LoginPage):=case
+             next(state)=s2: TRUE;
+             TRUE:FALSE;
+esac;
+next(Authentication):=case
+             next(state)= s3:TRUE;
+			 TRUE:FALSE;
+esac;
+
+next(LoginFailed):=case
+             next(state)=s5:TRUE;
+			 TRUE:FALSE;
+esac;
+
+next(ProjectDashboardPage):=case
+             next(state)=s4:TRUE;
+			 TRUE:FALSE;
+esac;
+next(Exit):=case
+             next(state)=s6:TRUE;
+			 TRUE:FALSE;
+esac;
